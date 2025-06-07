@@ -1,43 +1,64 @@
 // index.js
 
-// 1) Load Express:
-const express = require('express');
+// Connect to the database
+require('./db');      // this will log "MongoDB connected" (or error) on startup
 
-// 1.5) Create the path variable
+// Load Express:
+const express = require('express');
+const expressLayouts = require('express-ejs-layouts');
+// Create the path variable
 const path = require('path');
 
-// 2) Create an Express app:
+// Create an Express app:
 const app = express();
 
-const expressLayouts = require('express-ejs-layouts');
-
-// Tell Express where to find static assets:
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Set EJS as the view engine and specify the 'views' folder
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
-
-// 3) Define a port (use environment variable or fallback to 3000):
-const PORT = process.env.PORT || 3000;
-
+// Enable express-ejs-layouts:
 app.use(expressLayouts); //Wires up express-ejs-layouts inside this index.js
 
-// 4) Set up a route for GET "/" that responds with "Hello, World!"
+app.use(express.json());  //for json files
+app.use(express.urlencoded({extended: true}));  //for html form submissions (Optional, we can skip if needed)
+// (Optional) Set the default layout—this tells it to look for views/layout.ejs
+app.set('layout', 'layout');
+
+// Configure where your views live and which engine to use:
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
+// Serve static assets from /public
+app.use(express.static(path.join(__dirname, 'public')));
+
+
+// Routes
 app.get('/', (req, res) => {
-  res.render('index');
+  // Pass in page-specific variables here:
+  res.render('index', { title: 'Home' });
 });
 
-// Example JSON API endpoint:
 app.get('/api/info', (req, res) => {
   res.json({
-    app: 'node-hello-world',
+    app: 'hello-world',
     version: '1.0.0',
-    author: 'Jeremy H'
+    author: 'Your Name',
   });
 });
 
-// 5) Start listening on PORT:
+
+const Note = require('./models/note');
+
+// Create a new note
+app.post('/api/notes', async (req, res) => {
+  try {
+    const { title, content } = req.body;
+    const note = new Note({ title, content });
+    await note.save();
+    res.status(201).json(note);
+  } catch (err) {
+    console.error(err);
+    res.status(400).json({ error: err.message });
+  }
+});
+// Listen on the environment’s PORT or 3000 locally
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Express server listening at http://localhost:${PORT}`);
 });

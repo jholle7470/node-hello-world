@@ -7,3 +7,6 @@ git push  //pushes current local branch to remote repo i.e. github
 //To add a file to a folder or anywhere you can use touch folderName/filename.ext
 //Use .gitkeep as a dummy file
 
+tqXCNCPxy3mqC3ds
+
+mongodb+srv://jholle:tqXCNCPxy3mqC3ds@nodecluster01.hnkt9a3.mongodb.net/?retryWrites=true&w=majority&appName=NodeCluster01
