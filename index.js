@@ -57,6 +57,34 @@ app.post('/api/notes', async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 });
+
+
+// GET all notes
+app.get('/api/notes', async (req, res) => {
+  try {
+    const notes = await Note.find().sort({ createdAt: -1 });  // newest first
+    res.json(notes);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// GET a single note by ID
+app.get('/api/notes/:id', async (req, res) => {
+  try {
+    const note = await Note.findById(req.params.id);
+    if (!note) {
+      return res.status(404).json({ error: 'Note not found' });
+    }
+    res.json(note);
+  } catch (err) {
+    console.error(err);
+    res.status(400).json({ error: 'Invalid note ID' });
+  }
+});
+
+
 // Listen on the environment’s PORT or 3000 locally
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
