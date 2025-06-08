@@ -84,6 +84,64 @@ app.get('/api/notes/:id', async (req, res) => {
   }
 });
 
+// Replace an existing note entirely
+app.put('/api/notes/:id', async (req, res) => {
+  try {
+    const { title, content } = req.body;
+    // validate required fields
+    if (!title || !content) {
+      return res.status(400).json({ error: 'Title and content are required' });
+    }
+    // overwrite: { new: true } returns the updated document
+    const updated = await Note.findByIdAndUpdate(
+      req.params.id,
+      { title, content, updatedAt: Date.now() },
+      { new: true, runValidators: true }
+    );
+    if (!updated) {
+      return res.status(404).json({ error: 'Note not found' });
+    }
+    res.json(updated);
+  } catch (err) {
+    console.error(err);
+    res.status(400).json({ error: 'Invalid data or ID' });
+  }
+});
+
+// Partially update a note’s fields
+app.patch('/api/notes/:id', async (req, res) => {
+  try {
+    const updates = req.body; // e.g. { title: 'New title' }
+    const updated = await Note.findByIdAndUpdate(
+      req.params.id,
+      { $set: updates, updatedAt: Date.now() },
+      { new: true, runValidators: true }
+    );
+    if (!updated) {
+      return res.status(404).json({ error: 'Note not found' });
+    }
+    res.json(updated);
+  } catch (err) {
+    console.error(err);
+    res.status(400).json({ error: 'Invalid update data or ID' });
+  }
+});
+
+
+// Delete a note
+app.delete('/api/notes/:id', async (req, res) => {
+  try {
+    const deleted = await Note.findByIdAndDelete(req.params.id);
+    if (!deleted) {
+      return res.status(404).json({ error: 'Note not found' });
+    }
+    res.json({ message: 'Note deleted', id: req.params.id });
+  } catch (err) {
+    console.error(err);
+    res.status(400).json({ error: 'Invalid note ID' });
+  }
+});
+
 
 // Listen on the environment’s PORT or 3000 locally
 const PORT = process.env.PORT || 3000;
