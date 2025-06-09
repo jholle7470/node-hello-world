@@ -27,7 +27,7 @@ app.set('view engine', 'ejs');
 // Serve static assets from /public
 app.use(express.static(path.join(__dirname, 'public')));
 
-
+//////////////////////////// All API's BELOW/////////////////////////
 // Routes
 app.get('/', (req, res) => {
   // Pass in page-specific variables here:
@@ -63,7 +63,7 @@ app.post('/api/notes', async (req, res) => {
 app.get('/api/notes', async (req, res) => {
   try {
     const notes = await Note.find().sort({ createdAt: -1 });  // newest first
-    res.json(notes);
+    res.render('notes', { title: 'All Notes', notes });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Server error' });
@@ -141,6 +141,34 @@ app.delete('/api/notes/:id', async (req, res) => {
     res.status(400).json({ error: 'Invalid note ID' });
   }
 });
+
+//////////////////////////// END OF API'S//////////////////////////////////
+
+///////////////////////////  FRONT END ///////////////////////////////////
+// Render a page showing all notes and a form to create a new one
+app.get('/notes', async (req, res) => {
+  try {
+    const notes = await Note.find().sort({ createdAt: -1 });
+    res.render('notes', { title: 'All Notes', notes });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  }
+});
+
+// Handle form POST to create a note, then redirect back
+app.post('/notes', async (req, res) => {
+  try {
+    const { title, content } = req.body;
+    await Note.create({ title, content });
+    res.redirect('/notes');
+  } catch (err) {
+    console.error(err);
+    res.status(400).send('Bad Request');
+  }
+});
+
+
 
 
 // Listen on the environment’s PORT or 3000 locally

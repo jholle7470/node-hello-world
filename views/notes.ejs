@@ -1,0 +1,29 @@
+<!-- views/notes.ejs -->
+
+<h2 class="mb-4 text-center">All Notes</h2>
+
+<form action="/notes" method="POST" class="mb-5 w-100">
+  <div class="mb-3">
+    <label for="title" class="form-label">Title</label>
+    <input type="text" id="title" name="title" class="form-control" placeholder="Note title" required/>
+  </div>
+  <div class="mb-3">
+    <label for="content" class="form-label">Content</label>
+    <textarea id="content" name="content" class="form-control" rows="4" placeholder="Your note…" required></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary w-100">Add Note</button>
+</form>
+
+<% if (notes.length === 0) { %>
+  <p class="text-center text-muted">No notes yet. Add one above!</p>
+<% } else { %>
+  <div class="w-100">
+    <% notes.forEach(note => { %>
+      <div class="note-card">
+        <h5><%= note.title %></h5>
+        <p><%= note.content %></p>
+        <small class="text-muted"><%= note.createdAt.toLocaleString() %></small>
+      </div>
+    <% }) %>
+  </div>
+<% } %>
