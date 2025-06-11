@@ -12,26 +12,28 @@ const path = require('path');
 // Create an Express app:
 const app = express();
 
-// Enable express-ejs-layouts:
+// Enable express-ejs-layouts: Tell Express to use express-ejs-layouts:
 app.use(expressLayouts); //Wires up express-ejs-layouts inside this index.js
 
 app.use(express.json());  //for json files
 app.use(express.urlencoded({extended: true}));  //for html form submissions (Optional, we can skip if needed)
-// (Optional) Set the default layout—this tells it to look for views/layout.ejs
+
+// Optionally set which file to use as the default layout (views/layout.ejs):
 app.set('layout', 'layout');
 
-// Configure where your views live and which engine to use:
+// Configure where your views live and which engine to use: i.e. Point Express to your views folder and EJS engine:
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-// Serve static assets from /public
+// Serve static assets from /public  
 app.use(express.static(path.join(__dirname, 'public')));
 
 //////////////////////////// All API's BELOW/////////////////////////
 // Routes
 app.get('/', (req, res) => {
   // Pass in page-specific variables here:
-  res.render('index', { title: 'Home' });
+  //res.render('index', { title: 'Home' });
+  res.redirect('/notes');
 });
 
 app.get('/api/info', (req, res) => {

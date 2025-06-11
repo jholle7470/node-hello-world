@@ -2,15 +2,35 @@
 
 <h2 class="mb-4 text-center">All Notes</h2>
 
-<form action="/notes" method="POST" class="mb-5 w-100">
-  <div class="mb-3">
-    <label for="title" class="form-label">Title</label>
-    <input type="text" id="title" name="title" class="form-control" placeholder="Note title" required/>
+<form action="/notes" method="POST" class="mb-5">
+  <div class="row mb-3">
+    <label for="title" class="col-sm-2 col-form-label">Title</label>
+    <div class="col-sm-10">
+      <input  style="width: 100%; min-width: 600px"
+        type="text"
+        class="form-control"
+        id="title"
+        name="title"
+        placeholder="Note title"
+        required
+      />
+    </div>
   </div>
-  <div class="mb-3">
-    <label for="content" class="form-label">Content</label>
-    <textarea id="content" name="content" class="form-control" rows="4" placeholder="Your note…" required></textarea>
+
+  <div class="row mb-3">
+    <label for="content" class="col-sm-2 col-form-label">Content</label>
+    <div class="col-sm-10">
+      <textarea input style="width: 100%; min-width: 600px"
+        class="form-control"
+        id="content"
+        name="content"
+        rows="8"
+        placeholder="Your note…"
+        required
+      ></textarea>
+    </div>
   </div>
+
   <button type="submit" class="btn btn-primary w-100">Add Note</button>
 </form>
 

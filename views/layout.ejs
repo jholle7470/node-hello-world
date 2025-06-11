@@ -9,32 +9,98 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.4.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
-  <link rel="stylesheet" href="/styles.css" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/styles.css" />
+    <style>
+      /* Ensure body and html take full height */
+      html, body {
+        height: 100%;
+        margin: 0;
+      }
+      /* Three-column layout */
+      .app-container {
+        display: flex;
+        height: 100%;
+      }
+      nav.sidebar {
+        width: 340px;
+        background-color: #1f1f1f;
+        color: #e0e0e0;
+        flex-shrink: 0;
+        padding: 1rem;
+      }
+      main.content {
+        flex-grow: 1;
+        background-color: #121212;
+        color: #e0e0e0;
+        padding: 2rem;
+        overflow-y: auto;
+      }
+      aside.news-panel {
+        width: 350px;
+        background-color: #1f1f1f;
+        color: #e0e0e0;
+        flex-shrink: 0;
+        padding: 1rem;
+      }
+      /* Sidebar links */
+      .sidebar .nav-link {
+        color: #e0e0e0;
+        padding: 0.5rem 0;
+      }
+      .sidebar .nav-link:hover {
+        color: #3f51b5;
+      }
+      /* News items */
+      .news-panel .list-unstyled li {
+        margin-bottom: 1rem;
+      }
+    </style>
   </head>
-  <body class="bg-light">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="/">My App</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
-            <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navMenu">
-              <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                  <a class="nav-link" href="/notes">Notes</a>
-                </li>
-              </ul>
-            </div>
-      </div>
-    </nav>
+  <body>
+    <div class="app-container">
+      <!-- Left Sidebar -->
+      <nav class="sidebar">
+        <h4 class="mb-4">My App</h4>
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/notes">Notes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/news">News</a>
+          </li>
+        </ul>
+      </nav>
 
-    <!-- Use a full-height flex container -->
-    <div class="main-container">
-      <%- body %>
+      <!-- Main Content -->
+      <main class="content">
+        <%- body %>
+      </main>
+
+      <!-- Right News Panel -->
+      <aside class="news-panel">
+        <h5 class="mb-3">Latest News</h5>
+        <ul class="list-unstyled">
+          <li>
+            <a href="#" class="text-light">News Item 1</a>
+            <small class="d-block text-muted">6/10/2025</small>
+          </li>
+          <li>
+            <a href="#" class="text-light">News Item 2</a>
+            <small class="d-block text-muted">6/9/2025</small>
+          </li>
+          <li>
+            <a href="#" class="text-light">News Item 3</a>
+            <small class="d-block text-muted">6/8/2025</small>
+          </li>
+        </ul>
+      </aside>
     </div>
 
-
-    <!-- Bootstrap JS (optional, for components) -->
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.4.0/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
