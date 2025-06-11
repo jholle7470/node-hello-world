@@ -43,34 +43,90 @@
         flex-shrink: 0;
         padding: 1rem;
       }
-      /* Sidebar links */
+      
+      /* Modern button styling for sidebar nav links */
       .sidebar .nav-link {
         color: #e0e0e0;
-        padding: 0.5rem 0;
+        padding: 8px 16px;
+        margin-bottom: 6px;
+        background-color: #2a2a2a;
+        border: 1px solid #404040;
+        border-radius: 6px;
+        transition: all 0.2s ease;
+        text-decoration: none;
+        display: block;
+        font-weight: 500;
       }
+      
       .sidebar .nav-link:hover {
-        color: #3f51b5;
+        color: #ffffff;
+        background-color: #3a3a3a;
+        border-color: #5a5a5a;
+        transform: translateY(-1px);
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
       }
-      /* News items */
+      
+      .sidebar .nav-link.active {
+        color: #ffffff;
+        background-color: #3f51b5;
+        border-color: #3f51b5;
+        box-shadow: 0 2px 8px rgba(63, 81, 181, 0.3);
+      }
+      
+      .sidebar .nav-link.active:hover {
+        background-color: #354db3;
+        border-color: #354db3;
+      }
+      
+      /* News items - styled like sidebar buttons */
       .news-panel .list-unstyled li {
-        margin-bottom: 1rem;
+        margin-bottom: 8px;
+      }
+      
+      .news-panel .news-link {
+        color: #e0e0e0;
+        padding: 8px 16px;
+        background-color: #2a2a2a;
+        border: 1px solid #404040;
+        border-radius: 6px;
+        transition: all 0.2s ease;
+        text-decoration: none;
+        display: block;
+        font-weight: 500;
+        margin-bottom: 4px;
+      }
+      
+      .news-panel .news-link:hover {
+        color: #ffffff;
+        background-color: #3a3a3a;
+        border-color: #5a5a5a;
+        transform: translateY(-1px);
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      }
+      
+      .news-panel .news-date {
+        font-size: 0.85em;
+        color: #999;
+        margin-left: 16px;
+        margin-top: 2px;
       }
     </style>
   </head>
   <body>
+    <% const ap = typeof activePage === 'string' ? activePage : ''; %>
     <div class="app-container">
       <!-- Left Sidebar -->
       <nav class="sidebar">
         <h4 class="mb-4">My App</h4>
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a class="nav-link" href="/">Home</a>
+            <a class="nav-link <%= ap === 'home' ? 'active' : '' %>" href="/">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/notes">Notes</a>
+            <a class="nav-link <%= ap === 'notes' ? 'active' : '' %>" href="/notes">Notes</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/news">News</a>
+            <a class="nav-link <%= ap === 'news' ? 'active' : '' %>" href="/news">News</a>
           </li>
         </ul>
       </nav>
@@ -85,16 +141,16 @@
         <h5 class="mb-3">Latest News</h5>
         <ul class="list-unstyled">
           <li>
-            <a href="#" class="text-light">News Item 1</a>
-            <small class="d-block text-muted">6/10/2025</small>
+            <a href="#" class="news-link">News Item 1</a>
+            <small class="d-block news-date">6/10/2025</small>
           </li>
           <li>
-            <a href="#" class="text-light">News Item 2</a>
-            <small class="d-block text-muted">6/9/2025</small>
+            <a href="#" class="news-link">News Item 2</a>
+            <small class="d-block news-date">6/9/2025</small>
           </li>
           <li>
-            <a href="#" class="text-light">News Item 3</a>
-            <small class="d-block text-muted">6/8/2025</small>
+            <a href="#" class="news-link">News Item 3</a>
+            <small class="d-block news-date">6/8/2025</small>
           </li>
         </ul>
       </aside>
